@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
+declare_id!("LncxPiPXCrxhfoyASy289iBazYah37JT5n6HaUHGmzc");
 
 #[program]
 pub mod billyjacoby_gif_wall {
@@ -17,10 +17,12 @@ pub mod billyjacoby_gif_wall {
         // Get a reference to the account and increment the total gifs
         let base_account = &mut ctx.accounts.base_account;
 
+        let user = &mut ctx.accounts.user;
+
         // Build the struct.
         let item = ItemStruct {
             gif_link: gif_link.to_string(),
-            user_address: *base_account.to_account_info().key,
+            user_address: *user.to_account_info().key,
             user_name: user_name.to_string(),
         };
 
@@ -45,6 +47,8 @@ pub struct StartStuffOff<'info>{
 pub struct AddGif<'info> {
     #[account(mut)]
     pub base_account: Account<'info, BaseAccount>,
+    #[account(mut)]
+    pub user: Signer<'info>,
 }
 
 
